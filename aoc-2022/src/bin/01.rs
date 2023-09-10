@@ -1,9 +1,38 @@
 pub fn part_one(input: &str) -> Option<u32> {
-    None
+
+    // Group lines by blank lines
+    let res = input.trim()
+         .lines()
+         .fold(vec![0], |mut acc, line| {
+            if line.is_empty() {
+                acc.push(0);
+            } else {
+                let last = acc.last_mut().unwrap();
+                *last = *last + line.parse::<u32>().unwrap();
+            }
+            acc
+         });
+
+    Some(res.iter().max().unwrap().clone())
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    None
+    // Group lines by blank lines
+    let mut res = input.trim()
+         .lines()
+         .fold(vec![0], |mut acc, line| {
+            if line.is_empty() {
+                acc.push(0);
+            } else {
+                let last = acc.last_mut().unwrap();
+                *last = *last + line.parse::<u32>().unwrap();
+            }
+            acc
+         });
+    
+    res.sort_by_key(|&x| std::cmp::Reverse(x));
+
+    Some(res.iter().take(3).sum())
 }
 
 fn main() {
